@@ -1,0 +1,2 @@
+# ignore emacs elpa cache
+.emacs.d/elpa
