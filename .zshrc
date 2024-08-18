@@ -77,36 +77,14 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-#export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
+# Rust
 . "$HOME/.cargo/env"
 
 EDITOR=nvim
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-PATH=$PATH:/home/ray/bin:/home/ray/.local/share/JetBrains/Toolbox/scripts
-
 BREW_PREFIX=$(brew --prefix)
+
+PATH=$PATH:/home/ray/bin:/home/ray/.local/share/JetBrains/Toolbox/scripts:$HOME/.local/bin
 
 GROOVY_HOME=$BREW_PREFIX/opt/groovy/libexec
 
@@ -118,11 +96,6 @@ umask 022
 
 . $(pack completion --shell zsh)
 
-# start ssh-agent for login shells
-# [[ -o login ]] && eval $(ssh-agent -s)
-# use 1Password's as ssh-agent
-SSH_AUTH_SOCK=$HOME/.1password/agent.sock
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/ray/google-cloud-sdk/path.zsh.inc' ]; then . '/home/ray/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -132,6 +105,61 @@ if [ -f '/home/ray/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ray/goo
 eval "$(op completion zsh)"; compdef _op op
 
 source /home/ray/.config/op/plugins.sh
+
+# use 1Password's as ssh-agent
+SSH_AUTH_SOCK=$HOME/.1password/agent.sock
+
+source <(fzf --zsh)
+
+
+# -- Use fd instead of fzf --
+
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
+
+source ~/.fzf-git/fzf-git.sh
+
+show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
+
+export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \${}'"          "$@" ;;
+    ssh)          fzf --preview 'dig {}'                    "$@" ;;
+    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
+  esac
+}
+
+# ---- Zoxide (better cd) ----
+eval "$(zoxide init zsh)"
+
+# delta diff tool
+eval "$(delta --generate-completion zsh)"
+
+# wezterm
+# eval "$(wezterm shell-completion --shell zsh)"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
