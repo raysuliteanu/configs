@@ -27,7 +27,7 @@ a curl=curlie
 
 a dps='docker ps'
 
-a ls='exa --git'
+a ls='eza --git'
 a l='ls -l'
 a ll='ls -l'
 a la='ll -a'
