@@ -50,3 +50,5 @@ a kscope='cscope -kd -p 3'
 
 a fd='fd -H'
 
+a cd=z
+
