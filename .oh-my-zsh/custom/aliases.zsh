@@ -6,6 +6,8 @@ a zshconfig="vi ~/.zshrc"
 # edit this file
 a zalias="vi ~/.oh-my-zsh/custom/aliases.zsh"
 
+a nvimconfig="vi ~/.config/nvim/init.lua"
+
 a b=brew
 a bs='b search'
 a bi='b info'
@@ -20,8 +22,7 @@ a more='less -F'
 a less='less -F'
 
 #a top='btm --color=nord-light'
-a btm='btm --color=nord-light'
-a top=glances
+a top=bpytop
 a cat='bat --theme=ansi'
 a curl=curlie
 
