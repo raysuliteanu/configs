@@ -2,6 +2,11 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+ZSH_WEB_SEARCH_ENGINES=(
+  rdoc "https://docs.rs/"
+  crates "https://crates.io/search/?q="
+)
+#
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -22,7 +27,7 @@ ZSH_THEME="ray" # set by `omz`
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
@@ -71,7 +76,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git rust gradle docker gh kubectl web-search brew ubuntu aliases )
+plugins=(git rust gradle docker gh kubectl web-search brew ubuntu aliases tmux )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -157,6 +162,8 @@ eval "$(zoxide init zsh)"
 
 # delta diff tool
 eval "$(delta --generate-completion zsh)"
+
+eval "$(direnv hook zsh)"
 
 # wezterm
 # eval "$(wezterm shell-completion --shell zsh)"
