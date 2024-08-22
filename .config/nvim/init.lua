@@ -667,6 +667,77 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   {
+    'epwalsh/obsidian.nvim',
+    version = '*',
+    lazy = true,
+    ft = 'markdown',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      require('obsidian').setup {
+        workspaces = {
+          {
+            name = 'Ray',
+            path = '/home/ray/Documents/Obsidian/Ray',
+          },
+        },
+        notes_subdir = 'Inbox',
+        new_notes_location = 'notes_subdir',
+        disable_frontmatter = true,
+        templates = {
+          subdir = 'Templates',
+          date_format = '%Y-%m-%d',
+          time_format = '%H:%M:%S',
+        },
+        -- key mappings, below are the defaults
+        mappings = {
+          -- overrides the 'gf' mapping to work on markdown/wiki links within your vault
+          ['gf'] = {
+            action = function()
+              return require('obsidian').util.gf_passthrough()
+            end,
+            opts = { noremap = false, expr = true, buffer = true },
+          },
+        },
+        completion = {
+          nvim_cmp = true,
+          min_chars = 2,
+        },
+        ui = {
+          enable = true,
+          opts = {
+            conceallevel = 1,
+          },
+          -- Disable some things below here because I set these manually for all Markdown files using treesitter
+          -- checkboxes = {},
+          -- bullets = {},
+        },
+      }
+
+      -- >>> oo # from shell, navigate to vault (optional)
+      --
+      -- # NEW NOTE
+      -- >>> on "Note Name" # call my "obsidian new note" shell script (~/bin/on)
+      -- >>>
+      -- >>> ))) <leader>on # inside vim now, format note as template
+      -- >>> ))) # add tag, e.g. fact / blog / video / etc..
+      -- >>> ))) # add hubs, e.g. [[python]], [[machine-learning]], etc...
+      -- >>> ))) <leader>of # format title
+      --
+      -- # END OF DAY/WEEK REVIEW
+      -- >>> or # review notes in inbox
+      -- >>>
+      -- >>> ))) <leader>ok # inside vim now, move to zettelkasten
+      -- >>> ))) <leader>odd # or delete
+      -- >>>
+      -- >>> og # organize saved notes from zettelkasten into notes/[tag] folders
+      -- >>> ou # sync local with Notion
+      --
+    end,
+  },
+  { 'folke/zen-mode.nvim' },
+  {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
@@ -821,5 +892,32 @@ set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]]
 
--- The line beneath this is called `modeline`. See `:help modeline`
+-- Obsidian plugin
+-- NOTE: figure out how to do this above in the plugin definition
+-- navigate to vault
+vim.keymap.set('n', '<leader>oo', ':cd /home/ray/Documents/Obsidian/Ray<cr>')
+
+-- convert note to template and remove leading white space
+vim.keymap.set('n', '<leader>on', ':ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>')
+-- strip date from note title and replace dashes with spaces
+-- must have cursor on title
+vim.keymap.set('n', '<leader>of', ':s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>')
+
+-- search for files in full vault
+vim.keymap.set('n', '<leader>os', ':Telescope find_files search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
+vim.keymap.set('n', '<leader>oz', ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
+
+-- search for files in notes only
+vim.keymap.set('n', '<leader>ois', ':Telescope find_files search_dirs={"/home/ray/Documents/Obsidian/Ray/Resources/Notes"}<cr>')
+vim.keymap.set('n', '<leader>oiz', ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
+
+-- for review workflow
+-- move file in current buffer to zettelkasten folder
+vim.keymap.set('n', '<leader>ok', ":!mv '%:p' /home/ray/Documents/Obsidian/Ray/Resources/Notes<cr>:bd<cr>")
+-- delete file in current buffer
+vim.keymap.set('n', '<leader>odd', ":!rm '%:p'<cr>:bd<cr>")
+vim.opt.conceallevel = 1
+-- end Obsidian plugin
+
+-- The line beneath this is called `modeline`.
 -- vim: ts=2 sts=2 sw=2 et
