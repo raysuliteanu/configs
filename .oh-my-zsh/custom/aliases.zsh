@@ -21,6 +21,7 @@ a bo='b outdated'
 
 a h=history
 
+a c=clear
 a more='less -F'
 a less='less -F'
 
