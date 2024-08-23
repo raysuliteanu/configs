@@ -1,5 +1,8 @@
 alias a=alias
+
 a vi=nvim
+a vim=nvim
+a v=nvim
 
 a zshconfig="vi ~/.zshrc"
 
@@ -52,4 +55,5 @@ a kscope='cscope -kd -p 3'
 a fd='fd -H'
 
 a cd=z
+a t=tmux
 
