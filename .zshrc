@@ -165,6 +165,8 @@ eval "$(delta --generate-completion zsh)"
 
 eval "$(direnv hook zsh)"
 
+eval $(thefuck --alias)
+
 # wezterm
 # eval "$(wezterm shell-completion --shell zsh)"
 
