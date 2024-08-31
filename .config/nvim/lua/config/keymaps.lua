@@ -24,30 +24,30 @@ vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower win
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 -- Obsidian plugin
-vim.keymap.set("n", "<leader>oo", ":cd /home/ray/Documents/Obsidian/Ray<cr>")
+vim.keymap.set("n", "<leader>Oo", ":cd /home/ray/Documents/Obsidian/Ray<cr>")
 
 -- convert note to template and remove leading white space
-vim.keymap.set("n", "<leader>on", ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>")
+vim.keymap.set("n", "<leader>On", ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>")
 -- strip date from note title and replace dashes with spaces
 -- must have cursor on title
-vim.keymap.set("n", "<leader>of", ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>")
+vim.keymap.set("n", "<leader>Of", ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>")
 
 -- search for files in full vault
-vim.keymap.set("n", "<leader>os", ':Telescope find_files search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
-vim.keymap.set("n", "<leader>oz", ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
+vim.keymap.set("n", "<leader>Os", ':Telescope find_files search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
+vim.keymap.set("n", "<leader>Oz", ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
 
 -- search for files in notes only
 vim.keymap.set(
 	"n",
-	"<leader>ois",
+	"<leader>Ois",
 	':Telescope find_files search_dirs={"/home/ray/Documents/Obsidian/Ray/Resources/Notes"}<cr>'
 )
-vim.keymap.set("n", "<leader>oiz", ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
+vim.keymap.set("n", "<leader>Oiz", ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
 
 -- for review workflow
 -- move file in current buffer to zettelkasten folder
-vim.keymap.set("n", "<leader>ok", ":!mv '%:p' /home/ray/Documents/Obsidian/Ray/Resources/Notes<cr>:bd<cr>")
+vim.keymap.set("n", "<leader>Ok", ":!mv '%:p' /home/ray/Documents/Obsidian/Ray/Resources/Notes<cr>:bd<cr>")
 -- delete file in current buffer
-vim.keymap.set("n", "<leader>odd", ":!rm '%:p'<cr>:bd<cr>")
+vim.keymap.set("n", "<leader>Odd", ":!rm '%:p'<cr>:bd<cr>")
 vim.opt.conceallevel = 1
 -- end Obsidian plugin
