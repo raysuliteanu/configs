@@ -1,11 +1,13 @@
-# configs
-misc config files
+# Configs and Dotfiles
+
+### Misc config files
 
 For some of this config to work or mean anything, packages may need to be
 installed. See Brewfile. Some packages may not be installed via brew but
 rather apt.
 
 ## TODO
-Write a script to check and/or install dependencies not installed by brew
-(or better not installed by brew) e.g. rustup.
 
+- Write a script to check and/or install dependencies not installed by brew
+(or better not installed by brew) e.g. rustup.
+- use something like stow or nix HomeDir rather than homegrown scripts to setup and manage config.
