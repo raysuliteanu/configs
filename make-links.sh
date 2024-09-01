@@ -19,6 +19,7 @@ ${LN} -s $SCRIPT_DIR/.gitconfig $HOME
 ${LN} -s $SCRIPT_DIR/.gitattributes $HOME
 ${LN} -s $SCRIPT_DIR/.hgrc $HOME
 ${LN} -s $SCRIPT_DIR/.vimrc $HOME
+${LN} -s $SCRIPT_DIR/.wezterm.lua $HOME
 
 # directories
 ${LN} -s $SCRIPT_DIR/.emacs.d $HOME

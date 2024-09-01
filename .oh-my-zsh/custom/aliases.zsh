@@ -52,3 +52,5 @@ a warp='warp-terminal > /dev/null 2>&1 &'
 
 a kscope='cscope -kd -p 3'
 
+a wezterm='open-wezterm-here &'
+
