@@ -1,4 +1,14 @@
 return {
+	{
+		"neovim/nvim-lspconfig",
+		opts = {
+			setup = {
+				rust_analyzer = function()
+					return true
+				end,
+			},
+		},
+	},
 	-- add symbols-outline
 	{
 		"simrat39/symbols-outline.nvim",
