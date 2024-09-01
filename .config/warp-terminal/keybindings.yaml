@@ -1,0 +1,7 @@
+---
+"input:open_completion_suggestions": tab
+"editor_view:select_all": ctrl-shift-A
+"editor_view:move_to_line_end": ctrl-e
+"editor_view:move_to_line_start": ctrl-a
+"editor_view:insert_autosuggestion": shift-space
+"workspace:toggle_ai_assistant": none

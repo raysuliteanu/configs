@@ -29,6 +29,7 @@ ${LN} -s $SCRIPT_DIR/.config/tmux $HOME/.config
 ${LN} -s $SCRIPT_DIR/.config/jj $HOME/.config
 ${LN} -s $SCRIPT_DIR/.config/zed $HOME/.config
 ${LN} -s $SCRIPT_DIR/.config/bpytop $HOME/.config
+${LN} -s $SCRIPT_DIR/.config/warp-terminal $HOME/.config
 
 BIN_DIR=${SCRIPT_DIR}/bin
 DEST_BIN_DIR=${HOME}/bin
