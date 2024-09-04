@@ -26,6 +26,7 @@
 
 [alias]
 	co = checkout
+	sw = switch
 [rerere]
 	enabled = true
 [pull]
