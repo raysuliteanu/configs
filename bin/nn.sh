@@ -12,5 +12,4 @@ fi
 file_name=$(echo "$*" | tr ' ' '-')
 formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
 cd "$HOME/Documents/Obsidian/Ray" || exit
-touch "Inbox/${formatted_file_name}"
 nvim "Inbox/${formatted_file_name}"
