@@ -1,9 +1,6 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
 
--- This will hold the configuration.
-local config = wezterm.config_builder()
-
 wezterm.on("user-var-changed", function(window, pane, name, value)
 	local overrides = window:get_config_overrides() or {}
 	if name == "ZEN_MODE" then
@@ -27,13 +24,33 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
 	window:set_config_overrides(overrides)
 end)
 
--- This is where you actually apply your config choices
-
--- For example, changing the color scheme:
--- config.color_scheme = "GitHub"
-
-config.font =
-	wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "DemiBold", stretch = "Normal", style = "Normal" })
-
--- and finally, return the configuration to wezterm
-return config
+-- config
+return {
+	color_scheme = "Catppuccin Mocha",
+	font = wezterm.font("JetBrainsMono Nerd Font Mono", {
+		weight = "DemiBold",
+		stretch = "Normal",
+		style = "Normal",
+	}),
+	font_size = 16.0,
+	keys = {
+		{
+			key = "f",
+			mods = "CTRL",
+			action = wezterm.action.ToggleFullScreen,
+		},
+		{
+			key = "'",
+			mods = "CTRL",
+			action = wezterm.action.ClearScrollback("ScrollbackAndViewport"),
+		},
+	},
+	mouse_bindings = {
+		-- Ctrl-click will open the link under the mouse cursor
+		{
+			event = { Up = { streak = 1, button = "Left" } },
+			mods = "CTRL",
+			action = wezterm.action.OpenLinkAtMouseCursor,
+		},
+	},
+}
