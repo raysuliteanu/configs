@@ -39,35 +39,18 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- NOTE: This won't work in all terminal emulators/tmux/etc.
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
--- Obsidian plugin
--- change cwd to Obsidian vault
-vim.keymap.set("n", "<leader>Oo", ":cd /home/ray/Documents/Obsidian/Ray<cr>")
+vim.keymap.set("n", "gf", function()
+	if require("obsidian").util.cursor_on_markdown_link() then
+		return "<cmd>ObsidianFollowLink<CR>"
+	else
+		return "gf"
+	end
+end, { noremap = false, expr = true })
 
--- convert note to template and remove leading white space
-vim.keymap.set("n", "<leader>On", ":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>")
--- strip date from note title and replace dashes with spaces
--- must have cursor on title
-vim.keymap.set("n", "<leader>Of", ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<cr>")
-
--- search for files in full vault
-vim.keymap.set("n", "<leader>Os", ':Telescope find_files search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
-vim.keymap.set("n", "<leader>Oz", ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
-
--- search for files in notes only
-vim.keymap.set(
-	"n",
-	"<leader>Ois",
-	':Telescope find_files search_dirs={"/home/ray/Documents/Obsidian/Ray/Resources/Notes"}<cr>'
-)
-vim.keymap.set("n", "<leader>Oiz", ':Telescope live_grep search_dirs={"/home/ray/Documents/Obsidian/Ray"}<cr>')
-
--- for review workflow
--- move file in current buffer to zettelkasten folder
-vim.keymap.set("n", "<leader>Ok", ":!mv '%:p' /home/ray/Documents/Obsidian/Ray/Resources/Notes<cr>:bd<cr>")
--- delete file in current buffer
-vim.keymap.set("n", "<leader>Odd", ":!rm '%:p'<cr>:bd<cr>")
--- end Obsidian plugin
-
+vim.keymap.set("n", "<leader>f.", function()
+	require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
+end)
+--
 -- IntelliJ Keymaps - WIP
 vim.keymap.set("i", "<C-y>", "<Esc>yy", { desc = "Copy ([Y]ank) current line" })
 vim.keymap.set("i", "<C-d>", "<Esc>yypo", { desc = "Duplicate current line" })

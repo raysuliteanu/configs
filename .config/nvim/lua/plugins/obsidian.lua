@@ -7,6 +7,29 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
+		-- defaults to [n]ormal mode if not specified
+		keys = {
+			{
+				"<leader>Oo",
+				":cd /home/ray/Documents/Obsidian/Ray<cr>",
+				desc = "Set cwd to Obsidian vault",
+			},
+			{
+				"<leader>On",
+				":ObsidianTemplate note<cr> :lua vim.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<cr>",
+				desc = "Apply Obsidian 'note' template",
+			},
+			{
+				"<leader>O/",
+				":Telescope find_files search_dirs={'/home/ray/Documents/Obsidian/Ray'}<cr>",
+				desc = "Find in Obsidian vault",
+			},
+			{
+				"<leader>Os",
+				":Telescope find_files live_grep={'/home/ray/Documents/Obsidian/Ray'}<cr>",
+				desc = "Grep in Obsidian vault",
+			},
+		},
 		config = function()
 			require("obsidian").setup({
 				workspaces = {
@@ -38,35 +61,11 @@ return {
 					min_chars = 2,
 				},
 				ui = {
-					enable = true,
-					opts = {
-						conceallevel = 1,
-					},
-					-- Disable some things below here because I set these manually for all Markdown files using treesitter
-					-- checkboxes = {},
-					-- bullets = {},
+					-- using MeanderingProgrammer/render-markdown.nvim
+					-- see plugins/markdown.lua
+					enable = false,
 				},
 			})
-
-			-- >>> oo # from shell, navigate to vault (optional)
-			--
-			-- # NEW NOTE
-			-- >>> on "Note Name" # call my "obsidian new note" shell script (~/bin/on)
-			-- >>>
-			-- >>> ))) <leader>on # inside vim now, format note as template
-			-- >>> ))) # add tag, e.g. fact / blog / video / etc..
-			-- >>> ))) # add hubs, e.g. [[python]], [[machine-learning]], etc...
-			-- >>> ))) <leader>of # format title
-			--
-			-- # END OF DAY/WEEK REVIEW
-			-- >>> or # review notes in inbox
-			-- >>>
-			-- >>> ))) <leader>ok # inside vim now, move to zettelkasten
-			-- >>> ))) <leader>odd # or delete
-			-- >>>
-			-- >>> og # organize saved notes frm zettelkasten into notes/[tag] folders
-			-- >>> ou # sync local with Notion
-			--
 		end,
 	},
 }
