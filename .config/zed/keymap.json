@@ -1,0 +1,10 @@
+[
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-w": "editor::SelectLargerSyntaxNode",
+      "ctrl-shift-W": "editor::SelectSmallerSyntaxNode",
+      "ctrl-c": "editor::Cancel"
+    }
+  }
+]
