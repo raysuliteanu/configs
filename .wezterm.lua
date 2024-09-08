@@ -35,11 +35,6 @@ return {
 	font_size = 16.0,
 	keys = {
 		{
-			key = "f",
-			mods = "CTRL",
-			action = wezterm.action.ToggleFullScreen,
-		},
-		{
 			key = "'",
 			mods = "CTRL",
 			action = wezterm.action.ClearScrollback("ScrollbackAndViewport"),
