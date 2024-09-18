@@ -1,13 +1,14 @@
 [init]
 	defaultBranch = trunk
 [user]
-	signingkey = 25BCE3C253935ABE
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBcTf155SsDiQx7w4ylePL3e27mGbikc3/gxfA2ay6yx
 	email = raysuliteanu@gmail.com
 	name = Ray Suliteanu
 [commit]
 	gpgsign = true
 [core]
 	autocrlf = input
+	sshCommand = ssh.exe
 	pager = delta
 
 [interactive]
@@ -42,3 +43,10 @@
 
 [rebase]
 	updateRefs = true
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = "/mnt/c/Users/ray/AppData/Local/1Password/app/8/op-ssh-sign-wsl"
+
