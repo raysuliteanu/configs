@@ -50,6 +50,12 @@ end, { noremap = false, expr = true })
 vim.keymap.set("n", "<leader>f.", function()
 	require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
 end)
+
+-- chezmoi/telescope integration
+local telescope = require("telescope")
+telescope.load_extension("chezmoi")
+vim.keymap.set("n", "<leader>cz", telescope.extensions.chezmoi.find_files, {})
+
 --
 -- IntelliJ Keymaps - WIP
 vim.keymap.set("i", "<C-y>", "<Esc>yy", { desc = "Copy ([Y]ank) current line" })
