@@ -1,6 +1,0 @@
-# ignore emacs elpa cache
-/.emacs.d/elpa
-*.tmp*
-*.log
-/.config/tmux/plugins/
-.idea
