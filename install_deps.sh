@@ -1,15 +1,43 @@
 #!/bin/bash
 
 BREW=brew
-
-command -v "${BREW}" &> /dev/null
-if [[ $? -ne 0  ]]; then
-    echo "${BREW} is not in the PATH! Is it installed? Check the path or install it first."
-fi
+BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 
 # no-op the if executed with -x option
-if [[ "$-" == *x* ]]; then
+if [ "$-" = "x" ]; then
     BREW="echo brew"
+    echo "BREW='${BREW}'"
+else
+    command -v "${BREW}" &>/dev/null
+    if [[ $? -ne 0 ]]; then
+        echo "${BREW} is not in the PATH. Is it installed?"
+        read -p "Do you want to try and install it? " answer
+        case "$answer" in
+        [yY])
+            command -v "git" &>/dev/null
+            if [[ $? -ne 0 ]]; then
+                echo "Git is not in the PATH. It is required for Brew."
+                read -p "Do you want to try and install it? " answer
+                case "$answer" in
+                [yY])
+                    # Ubuntu:
+                    apt-get install git
+                    # Arch:
+                    pacman -Sy && pacman -S git
+                    ;;
+                *)
+                    echo "exiting ..." && exit 1
+                    ;;
+                esac
+            fi
+
+            /bin/bash -c "$(curl -fsSL ${BREW_URL})" || exit 1
+            ;;
+        *)
+            exit 1
+            ;;
+        esac
+    fi
 fi
 
 ${BREW} update && ${BREW} upgrade
@@ -22,6 +50,7 @@ ${BREW} install bat
 ${BREW} install bottom
 ${BREW} install bpftop
 ${BREW} install bpytop
+${BREW} install chezmoi
 ${BREW} install clipboard
 ${BREW} install cmake-docs
 ${BREW} install compiledb
@@ -56,7 +85,7 @@ ${BREW} install tmux
 ${BREW} install zoxide
 
 # optional dependencies
-if [[ "${1}" == "with-optional" ]]; then
+if [ "${1}" = "with-optional" ]; then
     echo "installing optional dependencies ..."
     ${BREW} install auth0/auth0-cli/auth0
     ${BREW} install bison
