@@ -8,16 +8,14 @@ if [ "$-" = "x" ]; then
     BREW="echo brew"
     echo "BREW='${BREW}'"
 else
-    command -v "${BREW}" &>/dev/null
-    if [[ $? -ne 0 ]]; then
+    if ! command -v "${BREW}" &>/dev/null; then
         echo "${BREW} is not in the PATH. Is it installed?"
-        read -p "Do you want to try and install it? " answer
+        read -rp "Do you want to try and install it? " answer
         case "$answer" in
         [yY])
-            command -v "git" &>/dev/null
-            if [[ $? -ne 0 ]]; then
+            if ! command -v "git" &>/dev/null; then
                 echo "Git is not in the PATH. It is required for Brew."
-                read -p "Do you want to try and install it? " answer
+                read -rp "Do you want to try and install it? " answer
                 case "$answer" in
                 [yY])
                     # Ubuntu:
@@ -66,8 +64,6 @@ ${BREW} install gh
 ${BREW} install git-delta
 ${BREW} install git-lfs
 ${BREW} install glances
-${BREW} install gradle
-${BREW} install groovy
 ${BREW} install httpie
 ${BREW} install jj
 ${BREW} install jq
@@ -75,7 +71,6 @@ ${BREW} install kind
 ${BREW} install kubernetes-cli
 ${BREW} install lazygit
 ${BREW} install llvm
-${BREW} install maven
 ${BREW} install neovim
 ${BREW} install ripgrep
 ${BREW} install rustup
@@ -130,5 +125,19 @@ else
 fi
 
 ${BREW} cleanup
+
+# install sdkman
+curl -s "https://get.sdkman.io" | bash
+if ! command -v sdk &>/dev/null; then
+    echo "problem installing sdkman"
+else
+    sdk install java
+    sdk install groovy
+    sdk install gradle
+    sdk install maven
+    sdk install scala
+    sdk install sbt
+    sdk install springboot
+fi
 
 # -- vim: ts=4 sts=4 sw=4 et
