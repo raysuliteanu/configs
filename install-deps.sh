@@ -57,4 +57,6 @@ else
 	sdk install springboot
 fi
 
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # -- vim: ts=4 sts=4 sw=4 et
