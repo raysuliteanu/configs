@@ -25,16 +25,8 @@ brew "jpeg-turbo"
 brew "ncurses"
 # BSD-style licensed readline alternative
 brew "libedit"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
-# Network authentication protocol
-brew "krb5"
 # Portable Foreign Function Interface library
 brew "libffi"
-# Port of Sun's Transport-Independent RPC library to Linux
-brew "libtirpc"
-# Public client interface for NIS(YP) and NIS+
-brew "libnsl"
 # General-purpose lossless data-compression library
 brew "zlib"
 # Library for manipulating PNG images
@@ -47,14 +39,14 @@ brew "xz"
 brew "zstd"
 # TIFF library and utilities
 brew "libtiff"
-# Extended crypt library for descrypt, md5crypt, bcrypt, and others
-brew "libxcrypt"
 # Color management engine supporting ICC profiles
 brew "little-cms2"
 # Library for decimal floating point arithmetic
 brew "mpdecimal"
 # High dynamic-range image file format
 brew "openexr"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
 # Library for command-line editing
 brew "readline"
 # Command-line interface for SQLite
@@ -69,6 +61,8 @@ brew "jpeg-xl"
 brew "libvmaf"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
+# Network authentication protocol
+brew "krb5"
 # C string library for manipulating Unicode strings
 brew "libunistring"
 # International domain name library (IDNA2008, Punycode and TR46)
@@ -77,6 +71,8 @@ brew "libidn2"
 brew "libnghttp2"
 # C library implementing the SSH2 protocol
 brew "libssh2"
+# Extended crypt library for descrypt, md5crypt, bcrypt, and others
+brew "libxcrypt"
 # Collection of Linux utilities
 brew "util-linux"
 # Open source suite of directory software
@@ -95,6 +91,10 @@ brew "glib"
 brew "icu4c@76"
 # User-space interfaces to POSIX 1003.1e capabilities
 brew "libcap"
+# Port of Sun's Transport-Independent RPC library to Linux
+brew "libtirpc"
+# Public client interface for NIS(YP) and NIS+
+brew "libnsl"
 # GNOME XML library
 brew "libxml2"
 # Library for querying compressed XML metadata
@@ -151,8 +151,6 @@ brew "cffi"
 brew "cryptography"
 # UNIX manpage compiler toolset
 brew "mandoc"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Bourne-Again SHell, a UNIX command interpreter
@@ -177,6 +175,8 @@ brew "bottom"
 brew "elfutils"
 # Dynamic real-time view of running eBPF programs
 brew "bpftop"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
 # Linux/OSX/FreeBSD resource monitor
 brew "bpytop"
 # Asynchronous DNS library
@@ -195,6 +195,8 @@ brew "pixman"
 brew "cairo"
 # Mozilla CA bundle for Python
 brew "certifi"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
 # Ultralightweight JSON parser in ANSI C
 brew "cjson"
 # Protocol for a compositor to talk to its clients
@@ -253,6 +255,8 @@ brew "libpcap"
 brew "dnstop"
 # Binary-decimal and decimal-binary routines for IEEE doubles
 brew "double-conversion"
+# Pluggable and configurable code formatting platform written in Rust
+brew "dprint"
 # Device tree compiler
 brew "dtc"
 # More intuitive version of du in rust
@@ -305,12 +309,12 @@ brew "lm-sensors"
 brew "spirv-llvm-translator"
 # API and commands for processing SPIR-V modules
 brew "spirv-tools"
+# Graphics Library
+brew "mesa"
 # Dynamic analysis tools (memory, debug, profiling)
 brew "valgrind"
 # Additional Wayland protocols
 brew "wayland-protocols"
-# Graphics Library
-brew "mesa"
 # Mesa OpenGL Utility library
 brew "mesa-glu"
 # Utility to configure and test X input devices
@@ -372,7 +376,7 @@ brew "libtool"
 # ODBC 3 connectivity for UNIX
 brew "unixodbc"
 # Cross-platform C++ GUI toolkit
-brew "wxwidgets"
+brew "wxwidgets", link: false
 # Programming language for highly scalable real-time systems
 brew "erlang"
 # GNU database manager
@@ -665,8 +669,12 @@ brew "luajit"
 brew "luarocks"
 # Bare libuv bindings for lua
 brew "luv"
+# Personal Knowledge Management System for the LSP
+brew "markdown-oxide"
 # Fast, flexible, config-based cli for linting Markdown/CommonMark files
 brew "markdownlint-cli2"
+# Language Server Protocol for Markdown
+brew "marksman"
 # Create modern online books from Markdown files
 brew "mdbook"
 # Scalable distributed version control system
@@ -681,6 +689,8 @@ brew "minicom"
 brew "msgpack"
 # Robust (fully ACID) transactional property graph database
 brew "neo4j"
+# Fast, highly customisable system info script
+brew "neofetch"
 # Very basic terminfo library
 brew "unibilium"
 # Clean C library for processing UTF-8 Unicode data
@@ -735,6 +745,8 @@ brew "skaffold"
 brew "socat"
 # Feature-rich console based todo list manager
 brew "task"
+# Tool for taking notes and open urls with taskwarrior
+brew "taskopen"
 # Terminal user interface for taskwarrior
 brew "taskwarrior-tui"
 # Very fast implementation of tldr in Rust
