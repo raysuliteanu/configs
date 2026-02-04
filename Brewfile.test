@@ -1,5 +1,4 @@
 # small brewfile for testing install script
 tap "anomalyco/tap"
-brew "bzip2"
-go "golang.org/x/tools/gopls"
-cargo "alacritty"
+brew "gcc"
+cargo "sccache"
