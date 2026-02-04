@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # install sdkman; requires curl so need to install Brewfile stuff first
 if [ ! -d "$HOME/.sdkman" ]; then
-	curl -s "https://get.sdkman.io" | bash
+    curl -s "https://get.sdkman.io" | bash
 else
-	echo "SDKMAN is already installed."
+    echo "SDKMAN is already installed."
 fi
 
 export SDKMAN_DIR="$HOME/.sdkman"
