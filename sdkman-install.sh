@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # install sdkman; requires curl so need to install Brewfile stuff first
 if [ ! -d "$HOME/.sdkman" ]; then
     curl -s "https://get.sdkman.io" | bash
@@ -8,7 +10,13 @@ else
 fi
 
 export SDKMAN_DIR="$HOME/.sdkman"
+# shellcheck source=/dev/null
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+if ! command -v sdk &>/dev/null; then
+    echo "Error: SDKMAN installation failed or not properly sourced"
+    exit 1
+fi
 
 sdk version
 

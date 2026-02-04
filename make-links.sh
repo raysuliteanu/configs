@@ -13,9 +13,10 @@ print_error() {
 run_cmd() {
     local tmp_file
     tmp_file=$(mktemp)
+    trap 'rm -f "$tmp_file"' RETURN
     "$@" | tee "$tmp_file" 2>&1
     local status=$?
-    if [ $status -ne 0 ]; then
+    if [[ $status -ne 0 ]]; then
         print_error "$(cat "$tmp_file")"
 
         if [[ "${ALWAYS_CONT}" == "1" ]]; then
@@ -87,8 +88,8 @@ if [ ! -d "${DEST_BIN_DIR}" ]; then
     ${MD} -p "${DEST_BIN_DIR}" || exit 1
 fi
 
-find "${BIN_DIR}" -type f -name '*.sh' | while read -r path; do
+fd -t f '\.sh$' "${BIN_DIR}" | while read -r path; do
     filename="$(basename "${path%.*}")"
     echo "linking ${path} to ${DEST_BIN_DIR}/${filename}"
-    run_cmd ${LN} -s "${path}" "${DEST_BIN_DIR}/${filename}"
+    run_cmd "${LN}" -s "${path}" "${DEST_BIN_DIR}/${filename}"
 done

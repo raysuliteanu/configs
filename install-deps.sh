@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 BREW=brew
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 
@@ -18,10 +20,7 @@ else
                 read -rp "Do you want to try and install it? " answer
                 case "$answer" in
                 [yY])
-                    # Ubuntu:
                     apt-get install git
-                    # Arch:
-                    pacman -Sy && pacman -S git
                     ;;
                 *)
                     echo "exiting ..." && exit 1
@@ -46,19 +45,17 @@ ${BREW} cleanup
 # todo: run chezmoi init
 
 # install sdkman
-curl -s "https://get.sdkman.io" | bash
-if ! command -v sdk &>/dev/null; then
-    echo "problem installing sdkman"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "${SCRIPT_DIR}/sdkman-install.sh" ]; then
+    "${SCRIPT_DIR}/sdkman-install.sh"
 else
-    sdk install java
-    sdk install groovy
-    sdk install gradle
-    sdk install maven
-    sdk install scala
-    sdk install sbt
-    sdk install springboot
+    echo "Warning: sdkman-install.sh not found, skipping SDKMAN setup"
 fi
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+    echo "TPM already installed, skipping..."
+fi
 
 # -- vim: ts=4 sts=4 sw=4 et
