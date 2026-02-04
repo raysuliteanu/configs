@@ -89,14 +89,23 @@ else
     info "Running test script: $SCRIPT_TO_TEST"
     if [ "$DRY_RUN" -eq 1 ]; then
         if [[ "$SCRIPT_TO_TEST" == "install-deps.sh" ]]; then
-            info "[DRY RUN] Would run: docker run --name $CONTAINER_NAME $IMAGE_NAME bash -c './$SCRIPT_TO_TEST -y'"
+            if [ -f "Brewfile.test" ]; then
+                info "[DRY RUN] Would run: docker run --name $CONTAINER_NAME $IMAGE_NAME bash -c './$SCRIPT_TO_TEST -y -b Brewfile.test'"
+            else
+                info "[DRY RUN] Would run: docker run --name $CONTAINER_NAME $IMAGE_NAME bash -c './$SCRIPT_TO_TEST -y'"
+            fi
         else
             info "[DRY RUN] Would run: docker run --name $CONTAINER_NAME $IMAGE_NAME bash -c 'yes | ./$SCRIPT_TO_TEST'"
         fi
     else
         # Run non-interactively (use -y flag for install-deps.sh)
         if [[ "$SCRIPT_TO_TEST" == "install-deps.sh" ]]; then
-            TEST_CMD="./$SCRIPT_TO_TEST -y"
+            # Use Brewfile.test if it exists, otherwise use default Brewfile
+            if [ -f "Brewfile.test" ]; then
+                TEST_CMD="./$SCRIPT_TO_TEST -y -b Brewfile.test"
+            else
+                TEST_CMD="./$SCRIPT_TO_TEST -y"
+            fi
         else
             TEST_CMD="yes | ./$SCRIPT_TO_TEST"
         fi

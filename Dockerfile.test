@@ -42,7 +42,7 @@ WORKDIR /home/ubuntu
 # Copy the installation scripts to home directory
 COPY --chown=1000:1000 . configs/
 
-WORKDIR configs
+WORKDIR /home/ubuntu/configs
 
 # Default command: run bash for interactive testing
 CMD ["/bin/bash"]

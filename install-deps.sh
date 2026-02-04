@@ -6,9 +6,11 @@ set -euo pipefail
 DRY_RUN=0
 NON_INTERACTIVE=0
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+# Brewfile to use (environment variable can be overridden by -b flag)
+BREWFILE="${BREWFILE:-Brewfile}"
 
 # Parse command-line options
-while getopts "dy" opt; do
+while getopts "dyb:" opt; do
     case ${opt} in
     d)
         DRY_RUN=1
@@ -16,10 +18,14 @@ while getopts "dy" opt; do
     y)
         NON_INTERACTIVE=1
         ;;
+    b)
+        BREWFILE="${OPTARG}"
+        ;;
     *)
-        echo "Usage: $0 [-d] [-y]"
+        echo "Usage: $0 [-d] [-y] [-b brewfile]"
         echo "  -d: Dry run mode (show what would be done)"
         echo "  -y: Non-interactive mode (assume yes to all prompts)"
+        echo "  -b: Specify Brewfile to use (default: Brewfile, or \$BREWFILE env var)"
         exit 1
         ;;
     esac
@@ -165,8 +171,16 @@ if [ "$DRY_RUN" -eq 0 ]; then
 fi
 
 echo "Running Homebrew operations..."
+echo "Using Brewfile: ${BREWFILE}"
+
+# Verify Brewfile exists (skip in dry-run mode)
+if [ "$DRY_RUN" -eq 0 ] && [ ! -f "${BREWFILE}" ]; then
+    echo "Error: Brewfile '${BREWFILE}' not found"
+    exit 1
+fi
+
 run_cmd brew update
-run_cmd brew bundle install
+run_cmd brew bundle install --file="${BREWFILE}"
 run_cmd brew cleanup
 
 # Initialize chezmoi with dotfiles repository

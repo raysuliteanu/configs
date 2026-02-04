@@ -16,12 +16,28 @@ Main installation script for setting up a new system. OS-agnostic (supports macO
 
 **Usage:**
 ```bash
-./install-deps.sh [-d] [-y]
+./install-deps.sh [-d] [-y] [-b brewfile]
 ```
 
 **Options:**
 - `-d` - Dry run mode (show what would be done without making changes)
 - `-y` - Non-interactive mode (assume yes to all prompts, useful for automation)
+- `-b` - Specify custom Brewfile to use (default: `Brewfile`, or `$BREWFILE` environment variable)
+
+**Examples:**
+```bash
+# Standard installation
+./install-deps.sh
+
+# Use custom Brewfile
+./install-deps.sh -b Brewfile.minimal
+
+# Use environment variable
+BREWFILE=Brewfile.test ./install-deps.sh -y
+
+# Dry run with custom Brewfile
+./install-deps.sh -d -b Brewfile.test
+```
 
 **Features:**
 - Automatically detects OS (macOS/Linux)
