@@ -14,4 +14,4 @@ while getopts "f" opt; do
     esac
 done
 
-brew bundle dump ${FORCE:+"$FORCE"} --describe
+brew bundle dump ${FORCE:+"$FORCE"} --describe --no-vscode
