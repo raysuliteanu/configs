@@ -6,7 +6,7 @@ Collection of scripts for setting up and managing development environment config
 
 ## Misc config files
 
-*NOTE*: configuration files have moved to <https://github.com/raysuliteanu/dotfiles>.
+_NOTE_: configuration files have moved to <https://github.com/raysuliteanu/dotfiles>.
 
 ## Scripts
 
@@ -15,16 +15,19 @@ Collection of scripts for setting up and managing development environment config
 Main installation script for setting up a new system. OS-agnostic (supports macOS and Linux).
 
 **Usage:**
+
 ```bash
 ./install-deps.sh [-d] [-y] [-b brewfile]
 ```
 
 **Options:**
+
 - `-d` - Dry run mode (show what would be done without making changes)
 - `-y` - Non-interactive mode (assume yes to all prompts, useful for automation)
 - `-b` - Specify custom Brewfile to use (default: `Brewfile`, or `$BREWFILE` environment variable)
 
 **Examples:**
+
 ```bash
 # Standard installation
 ./install-deps.sh
@@ -40,6 +43,7 @@ BREWFILE=Brewfile.test ./install-deps.sh -y
 ```
 
 **Features:**
+
 - Automatically detects OS (macOS/Linux)
 - Installs Homebrew if not present
 - Installs packages from Brewfile
@@ -50,10 +54,6 @@ BREWFILE=Brewfile.test ./install-deps.sh -y
 ### sdkman-install.sh
 
 Installs SDKMAN and various SDKs (Java, Gradle, Kotlin, Maven, Scala, etc.)
-
-### make-links.sh
-
-Creates symbolic links for scripts in `bin/` directory to `~/bin`
 
 ### update-brewfile.sh
 
@@ -73,6 +73,8 @@ The testing setup uses Docker to simulate a fresh Ubuntu 24.04 system, allowing 
 
 - Docker installed and running
 - Sufficient disk space for Ubuntu base image and packages
+
+**Note on Linux Systems:** When using Homebrew on Linux to install gcc, a system C compiler (`cc`) is required as a prerequisite for gcc's postinstall step. This is needed even though you're installing gcc itself - the postinstall script uses the system compiler to locate C runtime files. The test Docker image includes `build-essential` to satisfy this requirement.
 
 ### Quick Start
 
@@ -120,7 +122,6 @@ Once inside, you can run commands manually:
   - Example: `./test-install.sh -d`
 
 - `-s` **Script to test**: Specify which script to test (default: install-deps.sh)
-  - Example: `./test-install.sh -s make-links.sh`
 
 ### Testing Workflows
 
@@ -133,6 +134,7 @@ Test the complete installation from start to finish:
 ```
 
 This will:
+
 1. Build a fresh Ubuntu container
 2. Run `install-deps.sh` with automatic yes responses
 3. Show results and clean up
@@ -165,7 +167,6 @@ Inside the container:
 # Test individual components
 ./update-brewfile.sh
 ./sdkman-install.sh
-./make-links.sh
 
 # Check installed tools
 which brew
@@ -183,7 +184,6 @@ Test specific scripts in isolation:
 
 ```bash
 ./test-install.sh -s sdkman-install.sh
-./test-install.sh -s make-links.sh
 ./test-install.sh -s update-brewfile.sh
 ```
 
@@ -262,6 +262,7 @@ docker logs configs-test-<PID>
 #### Issue: Installation takes too long
 
 **Solution**: Some packages (like LLVM, GCC) are large. Consider:
+
 - Testing with a minimal Brewfile first
 - Using Docker layer caching
 - Running tests with specific script (`-s` option)
@@ -277,6 +278,7 @@ docker logs configs-test-<PID>
 4. **Test idempotency**: Always run scripts twice to ensure they handle re-runs gracefully
 
 5. **Clean up**: Remove test containers and images periodically:
+
    ```bash
    docker system prune -a
    ```

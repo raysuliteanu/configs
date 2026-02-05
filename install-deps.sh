@@ -226,5 +226,7 @@ echo "Installation complete!"
 if [ "$DRY_RUN" -eq 1 ]; then
     echo "(This was a dry run - no actual changes were made)"
 fi
+echo ""
+echo "*** REMINDER: run \`chezmoi apply\`"
 
 # -- vim: ts=4 sts=4 sw=4 et

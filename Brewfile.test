@@ -1,4 +1,10 @@
 # small brewfile for testing install script
+# just trying some representative types of brew install
+# e.g. tab/brew/cargo
 tap "anomalyco/tap"
 brew "gcc"
+# zip is needed for sdkman execution in the install script
+brew "zip"
+# chezmoi is needed for chezmoi execution in the install script
+brew "chezmoi"
 cargo "sccache"
