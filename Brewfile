@@ -782,6 +782,8 @@ brew "zoxide"
 brew "anomalyco/tap/opencode"
 # A CLI for building apps using Cloud Native Buildpacks
 brew "buildpacks/tap/pack"
+# Command-line interface for 1Password
+cask "1password-cli"
 go "golang.org/x/tools/gopls"
 go "honnef.co/go/tools/cmd/staticcheck"
 cargo "alacritty"
