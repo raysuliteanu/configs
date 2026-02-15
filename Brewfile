@@ -22,14 +22,6 @@ brew "highway"
 brew "imath"
 # JPEG image codec that aids compression and decompression
 brew "jpeg-turbo"
-# Text-based UI library
-brew "ncurses"
-# BSD-style licensed readline alternative
-brew "libedit"
-# Portable Foreign Function Interface library
-brew "libffi"
-# General-purpose lossless data-compression library
-brew "zlib"
 # Library for manipulating PNG images
 brew "libpng"
 # Extremely Fast Compression algorithm
@@ -40,12 +32,24 @@ brew "xz"
 brew "zstd"
 # TIFF library and utilities
 brew "libtiff"
+# General-purpose lossless data-compression library
+brew "zlib"
 # Color management engine supporting ICC profiles
 brew "little-cms2"
-# Library for decimal floating point arithmetic
-brew "mpdecimal"
 # High dynamic-range image file format
 brew "openexr"
+# New file format for still image compression
+brew "jpeg-xl"
+# Text-based UI library
+brew "ncurses"
+# BSD-style licensed readline alternative
+brew "libedit"
+# Portable Foreign Function Interface library
+brew "libffi"
+# Perceptual video quality assessment based on multi-method fusion
+brew "libvmaf"
+# Library for decimal floating point arithmetic
+brew "mpdecimal"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
 # Library for command-line editing
@@ -56,10 +60,6 @@ brew "sqlite"
 brew "unzip"
 # Image format providing lossless and lossy compression for web images
 brew "webp"
-# New file format for still image compression
-brew "jpeg-xl"
-# Perceptual video quality assessment based on multi-method fusion
-brew "libvmaf"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # Network authentication protocol
@@ -586,8 +586,6 @@ brew "httpie"
 brew "hunspell"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
-# Extendable open source continuous integration server
-brew "jenkins"
 # Git-compatible distributed version control system
 brew "jj"
 # Lightweight and flexible command-line JSON processor
@@ -716,6 +714,8 @@ brew "pipx"
 brew "pre-commit"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 brew "prettier"
+# Prettier daemon
+brew "prettierd"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.11"
 # Cross-platform application and UI framework
