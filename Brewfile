@@ -208,6 +208,12 @@ brew "chafa"
 brew "chezmoi"
 # Ultralightweight JSON parser in ANSI C
 brew "cjson"
+# Multi-platform support library with a focus on asynchronous I/O
+brew "libuv"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Use Claude Code from any ACP client such as Zed!
+brew "claude-agent-acp"
 # C/C++ and Java libraries for Unicode and globalization
 brew "icu4c@76"
 # Protocol for a compositor to talk to its clients
@@ -300,6 +306,8 @@ brew "lm-sensors"
 brew "spirv-llvm-translator"
 # API and commands for processing SPIR-V modules
 brew "spirv-tools"
+# Standard X constants and conversion to/from keycodes
+brew "xcb-util-keysyms"
 # Graphics Library
 brew "mesa"
 # OpenGL and OpenGL ES reference compiler for shading languages
@@ -348,8 +356,6 @@ brew "xauth"
 brew "xcb-util"
 # XCB port of Xlib's XImage and XShmImage
 brew "xcb-util-image"
-# Standard X constants and conversion to/from keycodes
-brew "xcb-util-keysyms"
 # Convenience functions for the X Render extension
 brew "xcb-util-renderutil"
 # Client and window-manager helpers for EWMH and ICCCM
@@ -582,10 +588,14 @@ brew "helix"
 brew "helm"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# Configurable static site generator
+brew "hugo"
 # Spell checker and morphological analyzer
 brew "hunspell"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
+# Duplicate file finder and an enhanced fork of 'fdupes'
+brew "jdupes"
 # Git-compatible distributed version control system
 brew "jj"
 # Lightweight and flexible command-line JSON processor
@@ -628,8 +638,6 @@ brew "librdkafka"
 brew "libserdes"
 # Library for handling page faults in user mode
 brew "libsigsegv"
-# Multi-platform support library with a focus on asynchronous I/O
-brew "libuv"
 # C99 library which implements a VT220 or xterm terminal emulator
 brew "libvterm"
 # X.Org: Client library for the Composite extension
@@ -722,8 +730,6 @@ brew "python@3.11"
 brew "qt"
 # Erlang build tool
 brew "rebar3"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # Readline wrapper: adds readline support to tools that lack it
 brew "rlwrap"
 # Rust toolchain installer
@@ -770,6 +776,8 @@ brew "virtualenv"
 brew "yaml-language-server"
 # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Pluggable terminal workspace, with terminal multiplexer as the base feature
+brew "zellij"
 # GTK+ dialog boxes for the command-line
 brew "zenity"
 # Language Server for Zig
@@ -807,6 +815,7 @@ cargo "cargo-show-asm"
 cargo "cargo-wizard"
 cargo "cbindgen"
 cargo "coreutils"
+cargo "czkawka_cli"
 cargo "flip-link"
 cargo "hyperfine"
 cargo "just"
