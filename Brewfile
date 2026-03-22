@@ -4,16 +4,8 @@ tap "buildpacks/tap"
 tap "rcmdnk/file"
 # Provides audio and MIDI functionality to the Linux operating system
 brew "alsa-lib"
-# High performance key/value database
-brew "berkeley-db@5"
 # Generic-purpose lossless compression algorithm by Google
 brew "brotli"
-# Freely available high-quality data compressor
-brew "bzip2"
-# Mozilla CA certificate store
-brew "ca-certificates"
-# XML 1.0 parser
-brew "expat"
 # Library and utilities for processing GIFs
 brew "giflib"
 # Performance-portable, length-agnostic SIMD with runtime dispatch
@@ -40,28 +32,22 @@ brew "little-cms2"
 brew "openexr"
 # New file format for still image compression
 brew "jpeg-xl"
+# Perceptual video quality assessment based on multi-method fusion
+brew "libvmaf"
+# Codec library for encoding and decoding AV1 video streams
+brew "aom"
+# High performance key/value database
+brew "berkeley-db@5"
+# Freely available high-quality data compressor
+brew "bzip2"
+# Mozilla CA certificate store
+brew "ca-certificates"
 # Text-based UI library
 brew "ncurses"
 # BSD-style licensed readline alternative
 brew "libedit"
-# Portable Foreign Function Interface library
-brew "libffi"
-# Perceptual video quality assessment based on multi-method fusion
-brew "libvmaf"
-# Library for decimal floating point arithmetic
-brew "mpdecimal"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
-# Library for command-line editing
-brew "readline"
-# Command-line interface for SQLite
-brew "sqlite"
-# Extraction utility for .zip compressed archives
-brew "unzip"
-# Image format providing lossless and lossy compression for web images
-brew "webp"
-# Codec library for encoding and decoding AV1 video streams
-brew "aom"
 # Network authentication protocol
 brew "krb5"
 # Extended crypt library for descrypt, md5crypt, bcrypt, and others
@@ -76,16 +62,28 @@ brew "libidn2"
 brew "libnghttp2"
 # C library implementing the SSH2 protocol
 brew "libssh2"
+# Library for command-line editing
+brew "readline"
+# Command-line interface for SQLite
+brew "sqlite"
 # Collection of Linux utilities
 brew "util-linux"
 # Open source suite of directory software
 brew "openldap"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# XML 1.0 parser
+brew "expat"
 # Message bus system, providing inter-application communication
 brew "dbus"
+# Portable Foreign Function Interface library
+brew "libffi"
+# Library for decimal floating point arithmetic
+brew "mpdecimal"
 # Perl compatible regular expressions library with a new API
 brew "pcre2"
+# Extraction utility for .zip compressed archives
+brew "unzip"
 # Core application library for C
 brew "glib"
 # User-space interfaces to POSIX 1003.1e capabilities
@@ -128,6 +126,8 @@ brew "libxi"
 brew "libxtst"
 # Protocol definitions and daemon for D-Bus at-spi
 brew "at-spi2-core"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin"
 # C library for encoding, decoding, and manipulating JSON
 brew "jansson"
 # Compression/decompression library aiming for high speed
@@ -163,7 +163,7 @@ brew "libtirpc"
 # Public client interface for NIS(YP) and NIS+
 brew "libnsl"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
+brew "python@3.12", link: false
 # Linux/OSX/FreeBSD resource monitor
 brew "bpytop"
 # Asynchronous DNS library
@@ -202,6 +202,8 @@ brew "harfbuzz"
 brew "libavif"
 # Framework for layout and rendering of i18n text
 brew "pango"
+# Image format providing lossless and lossy compression for web images
+brew "webp"
 # Versatile and fast Unicode/ASCII/ANSI graphics renderer
 brew "chafa"
 # Manage your dotfiles across multiple diverse machines, securely
@@ -500,6 +502,8 @@ brew "zeromq"
 brew "zimg"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg@6"
+# User-friendly command-line shell for UNIX-like operating systems
+brew "fish"
 # Fast Lexical Analyzer, generates Scanners (tokenizers)
 brew "flex"
 # Command-line tools for fly.io services
@@ -616,8 +620,6 @@ brew "latex2rtf"
 brew "lazygit"
 # TUI for Jujutsu/jj
 brew "lazyjj"
-# Build tool for Clojure
-brew "leiningen"
 # Building blocks for modern adaptive GNOME applications
 brew "libadwaita"
 # MNG/JNG reference library
@@ -682,6 +684,8 @@ brew "meson"
 brew "minicom"
 # C library for zip/unzip via zLib
 brew "minizip"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
 # Library for a binary-based efficient data interchange format
 brew "msgpack"
 # Very basic terminfo library
@@ -714,6 +718,8 @@ brew "tbb"
 brew "openvino"
 # Peek inside Parquet files right from your terminal
 brew "parqeye"
+# Minimal dumb-terminal emulation program
+brew "picocom"
 # Parallel gzip
 brew "pigz"
 # Execute binaries from Python packages in isolated environments
@@ -760,6 +766,8 @@ brew "taskwarrior-tui"
 brew "tealdeer"
 # Modernized, complete, self-contained TeX/LaTeX engine
 brew "tectonic"
+# General purpose fuzzy finder TUI
+brew "television"
 # Programmatically correct mistyped console commands
 brew "thefuck"
 # Terminal multiplexer
@@ -772,6 +780,8 @@ brew "tree-sitter"
 brew "universal-ctags"
 # Tool for creating isolated virtual python environments
 brew "virtualenv"
+# CLI for Git worktree management, designed for parallel AI agent workflows
+brew "worktrunk"
 # Language Server for Yaml Files
 brew "yaml-language-server"
 # Blazing fast terminal file manager written in Rust, based on async I/O
