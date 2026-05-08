@@ -224,8 +224,9 @@ fi
 echo "Setting up TPM..."
 if [ "$DRY_RUN" -eq 1 ]; then
     echo "[DRY RUN] Would check for TPM and clone if needed"
-elif [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    echo "[DRY RUN] git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm"
+elif [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 else
     echo "TPM already installed, skipping..."
 fi
