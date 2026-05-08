@@ -1,0 +1,172 @@
+# Provides audio and MIDI functionality to the Linux operating system
+brew "alsa-lib"
+# Collection of Linux utilities
+brew "util-linux"
+# Message bus system, providing inter-application communication
+brew "dbus"
+# User-space interfaces to POSIX 1003.1e capabilities
+brew "libcap"
+# Library for querying compressed XML metadata
+brew "libxmlb"
+# System and service manager
+brew "systemd", link: true
+# Tools and libraries to work with AppStream metadata
+brew "appstream"
+# X.Org: Protocol Headers
+brew "xorgproto"
+# X.Org: A Sample Authorization Protocol for X
+brew "libxau"
+# X.Org: X Display Manager Control Protocol library
+brew "libxdmcp"
+# X.Org: Interface to the X Window System protocol
+brew "libxcb"
+# X.Org: Core X11 protocol client library
+brew "libx11"
+# X.Org: Library for common extensions to the X11 protocol
+brew "libxext"
+# X.Org: Header files for the XFIXES extension
+brew "libxfixes"
+# X.Org: Library for the X Input Extension
+brew "libxi"
+# X.Org: Client API for the XTEST & RECORD extensions
+brew "libxtst"
+# Protocol definitions and daemon for D-Bus at-spi
+brew "at-spi2-core"
+# Port of Sun's Transport-Independent RPC library to Linux
+brew "libtirpc"
+# Public client interface for NIS(YP) and NIS+
+brew "libnsl"
+# X.Org: Library for the Render Extension to the X11 protocol
+brew "libxrender"
+# Protocol for a compositor to talk to its clients
+brew "wayland"
+# X.Org: Inter-Client Exchange Library
+brew "libice"
+# X.Org: X Session Management Library
+brew "libsm"
+# X.Org: X Resize, Rotate and Reflection extension library
+brew "libxrandr"
+# X.Org: X Toolkit Intrinsics library
+brew "libxt"
+# Linux-native asynchronous I/O access library
+brew "libaio"
+# Userspace library and tools for logical volume management
+brew "device-mapper"
+# Libraries and utilities for handling ELF objects
+brew "elfutils"
+# Implementation of the library requirements of the OpenCL C programming language
+brew "libclc"
+# Generic PCI access library
+brew "libpciaccess"
+# Library for accessing the direct rendering manager
+brew "libdrm"
+# X.Org: API for Xinerama extension to X11 Protocol
+brew "libxinerama"
+# X.Org: Shared memory 'SyncFence' synchronization primitive
+brew "libxshmfence"
+# X.Org: XFree86-VidMode X extension
+brew "libxxf86vm"
+# Tools for monitoring the temperatures, voltages, and fans
+brew "lm-sensors"
+# Tool and a library for bi-directional translation between SPIR-V and LLVM IR
+brew "spirv-llvm-translator"
+# API and commands for processing SPIR-V modules
+brew "spirv-tools"
+# Standard X constants and conversion to/from keycodes
+brew "xcb-util-keysyms"
+# Graphics Library
+brew "mesa"
+# OpenGL and OpenGL ES reference compiler for shading languages
+brew "glslang"
+# Hardware accelerated video processing library
+brew "libva"
+# Open source Video Decode and Presentation API library
+brew "libvdpau"
+# X.Org: X Video (Xv) extension
+brew "libxv"
+# Dynamic analysis tools (memory, debug, profiling)
+brew "valgrind"
+# Additional Wayland protocols
+brew "wayland-protocols"
+# Mesa OpenGL Utility library
+brew "mesa-glu"
+# Utility to configure and test X input devices
+brew "xinput"
+# Open-source alternative to the OpenGL Utility Toolkit (GLUT) library
+brew "freeglut"
+# GSettings schemas for desktop components
+brew "gsettings-desktop-schemas"
+# Fallback theme for FreeDesktop.org icon themes
+brew "hicolor-icon-theme"
+# Provides lists of various ISO standards
+brew "iso-codes"
+# Library for handling OpenGL function pointer management
+brew "libepoxy"
+# X.Org: Font encoding library
+brew "libfontenc"
+# VESA CVT standard timing modelines generator
+brew "libxcvt"
+# X.Org: X Damage Extension library
+brew "libxdamage"
+# X11 font rasterisation library
+brew "libxfont2"
+# X.Org: XKB file handling routines
+brew "libxkbfile"
+# X.Org: X miscellaneous utility routines library
+brew "libxmu"
+# X.Org Applications: xauth
+brew "xauth"
+# Additional extensions to the XCB library
+brew "xcb-util"
+# XCB port of Xlib's XImage and XShmImage
+brew "xcb-util-image"
+# Convenience functions for the X Render extension
+brew "xcb-util-renderutil"
+# Client and window-manager helpers for EWMH and ICCCM
+brew "xcb-util-wm"
+# XKB keyboard description compiler
+brew "xkbcomp"
+# Keyboard configuration database for the X Window System
+brew "xkeyboard-config"
+# X Window System display server
+brew "xorg-server"
+# Keyboard handling library
+brew "libxkbcommon"
+# Toolkit for creating graphical user interfaces
+brew "gtk+3"
+# X.Org: X Window System Cursor management library
+brew "libxcursor"
+# X.Org: X11 Screen Saver extension client library
+brew "libxscrnsaver"
+# Oil Runtime Compiler (ORC)
+brew "orc"
+# Sound system for POSIX OSes
+brew "pulseaudio"
+# Linux Audio Developer's Simple Plugin
+brew "ladspa-sdk"
+# Portable abstraction of the hierarchical topology of modern architectures
+brew "hwloc"
+# Process Management Interface for HPC environments
+brew "pmix"
+# High performance message passing library
+brew "open-mpi"
+# Netfilter tables userspace tools
+brew "nftables"
+# OpenCL Installable Client Driver (ICD) Loader
+brew "opencl-icd-loader"
+# GTK+ dialog boxes for the command-line
+brew "zenity"
+# Toolkit for creating graphical user interfaces
+brew "gtk4"
+# Building blocks for modern adaptive GNOME applications
+brew "libadwaita"
+# Minimalistic user-space library oriented to Netlink developers
+brew "libmnl"
+# Netfilter library providing interface to the nf_tables subsystem
+brew "libnftnl"
+# X.Org: pthread-stubs.pc
+brew "libpthread-stubs"
+# X.Org: Client library for the Composite extension
+brew "libxcomposite"
+# XCB cursor library (replacement for libXcursor)
+brew "xcb-util-cursor"
