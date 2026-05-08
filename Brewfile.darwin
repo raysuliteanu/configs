@@ -1,2 +1,4 @@
-# macOS-only packages
-# Add Mac-specific brews, casks, and mas entries here as you discover them.
+# Fast Lexical Analyzer, generates Scanners (tokenizers)
+brew "flex"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
