@@ -172,8 +172,6 @@ brew "cjson"
 brew "libuv"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Use Claude Code from any ACP client such as Zed!
-brew "claude-agent-acp"
 # C/C++ and Java libraries for Unicode and globalization
 brew "icu4c@76"
 # Cut, copy, and paste anything, anywhere, all from the terminal
@@ -639,7 +637,6 @@ cargo "cargo-binstall"
 cargo "cargo-binutils"
 cargo "cargo-cache"
 cargo "cargo-config"
-cargo "cargo-container"
 cargo "cargo-embassy"
 cargo "cargo-expand"
 cargo "cargo-generate"
@@ -658,7 +655,6 @@ cargo "flip-link"
 cargo "hyperfine"
 cargo "just"
 cargo "kmon"
-cargo "mdpls"
 cargo "presenterm"
 cargo "proximity-sort"
 cargo "rage"
@@ -671,3 +667,145 @@ cargo "trunk"
 cargo "wasm-bindgen-cli"
 cargo "wasm-tools"
 cargo "x"
+# Tools and libraries to work with AppStream metadata
+brew "appstream"
+# Protocol definitions and daemon for D-Bus at-spi
+brew "at-spi2-core"
+# Message bus system, providing inter-application communication
+brew "dbus"
+# Open-source alternative to the OpenGL Utility Toolkit (GLUT) library
+brew "freeglut"
+# OpenGL and OpenGL ES reference compiler for shading languages
+brew "glslang"
+# GSettings schemas for desktop components
+brew "gsettings-desktop-schemas"
+# Toolkit for creating graphical user interfaces
+brew "gtk4"
+# Fallback theme for FreeDesktop.org icon themes
+brew "hicolor-icon-theme"
+# Portable abstraction of the hierarchical topology of modern architectures
+brew "hwloc"
+# Provides lists of various ISO standards
+brew "iso-codes"
+# Building blocks for modern adaptive GNOME applications
+brew "libadwaita"
+# Implementation of the library requirements of the OpenCL C programming language
+brew "libclc"
+# Library for handling OpenGL function pointer management
+brew "libepoxy"
+# X.Org: Font encoding library
+brew "libfontenc"
+# X.Org: Inter-Client Exchange Library
+brew "libice"
+# X.Org: pthread-stubs.pc
+brew "libpthread-stubs"
+# X.Org: X Session Management Library
+brew "libsm"
+# Port of Sun's Transport-Independent RPC library to Linux
+brew "libtirpc"
+# Open source Video Decode and Presentation API library
+brew "libvdpau"
+# X.Org: Core X11 protocol client library
+brew "libx11"
+# X.Org: A Sample Authorization Protocol for X
+brew "libxau"
+# X.Org: Interface to the X Window System protocol
+brew "libxcb"
+# X.Org: Client library for the Composite extension
+brew "libxcomposite"
+# X.Org: X Window System Cursor management library
+brew "libxcursor"
+# VESA CVT standard timing modelines generator
+brew "libxcvt"
+# X.Org: X Damage Extension library
+brew "libxdamage"
+# X.Org: X Display Manager Control Protocol library
+brew "libxdmcp"
+# X.Org: Library for common extensions to the X11 protocol
+brew "libxext"
+# X.Org: Header files for the XFIXES extension
+brew "libxfixes"
+# X11 font rasterisation library
+brew "libxfont2"
+# X.Org: Library for the X Input Extension
+brew "libxi"
+# X.Org: API for Xinerama extension to X11 Protocol
+brew "libxinerama"
+# Keyboard handling library
+brew "libxkbcommon"
+# X.Org: XKB file handling routines
+brew "libxkbfile"
+# Library for querying compressed XML metadata
+brew "libxmlb"
+# X.Org: X miscellaneous utility routines library
+brew "libxmu"
+# X.Org: X Resize, Rotate and Reflection extension library
+brew "libxrandr"
+# X.Org: Library for the Render Extension to the X11 protocol
+brew "libxrender"
+# X.Org: X11 Screen Saver extension client library
+brew "libxscrnsaver"
+# X.Org: Shared memory 'SyncFence' synchronization primitive
+brew "libxshmfence"
+# X.Org: X Toolkit Intrinsics library
+brew "libxt"
+# X.Org: Client API for the XTEST & RECORD extensions
+brew "libxtst"
+# X.Org: X Video (Xv) extension
+brew "libxv"
+# X.Org: XFree86-VidMode X extension
+brew "libxxf86vm"
+# Graphics Library
+brew "mesa"
+# Mesa OpenGL Utility library
+brew "mesa-glu"
+# Create, run, and share large language models (LLMs)
+brew "ollama", restart_service: :changed
+# High performance message passing library
+brew "open-mpi"
+# OpenCL Installable Client Driver (ICD) Loader
+brew "opencl-icd-loader"
+# Oil Runtime Compiler (ORC)
+brew "orc"
+# Process Management Interface for HPC environments
+brew "pmix"
+# Sound system for POSIX OSes
+brew "pulseaudio"
+# Safe, concurrent, practical language
+brew "rust"
+# Smart session manager for the terminal
+brew "sesh"
+# Tool and a library for bi-directional translation between SPIR-V and LLVM IR
+brew "spirv-llvm-translator"
+# API and commands for processing SPIR-V modules
+brew "spirv-tools"
+# Collection of Linux utilities
+brew "util-linux"
+# X.Org Applications: xauth
+brew "xauth"
+# Additional extensions to the XCB library
+brew "xcb-util"
+# XCB cursor library (replacement for libXcursor)
+brew "xcb-util-cursor"
+# XCB port of Xlib's XImage and XShmImage
+brew "xcb-util-image"
+# Standard X constants and conversion to/from keycodes
+brew "xcb-util-keysyms"
+# Convenience functions for the X Render extension
+brew "xcb-util-renderutil"
+# Client and window-manager helpers for EWMH and ICCCM
+brew "xcb-util-wm"
+# Utility to configure and test X input devices
+brew "xinput"
+# XKB keyboard description compiler
+brew "xkbcomp"
+# Keyboard configuration database for the X Window System
+brew "xkeyboard-config"
+# X Window System display server
+brew "xorg-server"
+# X.Org: Protocol Headers
+brew "xorgproto"
+# GTK+ dialog boxes for the command-line
+brew "zenity"
+# Toolkit for creating graphical user interfaces
+brew "gtk+3"
