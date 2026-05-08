@@ -6,8 +6,8 @@ set -euo pipefail
 DRY_RUN=0
 NON_INTERACTIVE=0
 BREW_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-# Brewfile to use (environment variable can be overridden by -b flag)
-BREWFILE="${BREWFILE:-Brewfile}"
+# Single Brewfile override (empty = use Brewfile.common + Brewfile.<os>)
+BREWFILE="${BREWFILE:-}"
 
 # Parse command-line options
 while getopts "dyb:" opt; do
@@ -25,7 +25,7 @@ while getopts "dyb:" opt; do
         echo "Usage: $0 [-d] [-y] [-b brewfile]"
         echo "  -d: Dry run mode (show what would be done)"
         echo "  -y: Non-interactive mode (assume yes to all prompts)"
-        echo "  -b: Specify Brewfile to use (default: Brewfile, or \$BREWFILE env var)"
+        echo "  -b: Specify a single Brewfile (default: Brewfile.common + Brewfile.<os>)"
         exit 1
         ;;
     esac
@@ -171,16 +171,28 @@ if [ "$DRY_RUN" -eq 0 ]; then
 fi
 
 echo "Running Homebrew operations..."
-echo "Using Brewfile: ${BREWFILE}"
+run_cmd brew update
 
-# Verify Brewfile exists (skip in dry-run mode)
-if [ "$DRY_RUN" -eq 0 ] && [ ! -f "${BREWFILE}" ]; then
-    echo "Error: Brewfile '${BREWFILE}' not found"
-    exit 1
+if [ -n "${BREWFILE}" ]; then
+    echo "Using Brewfile: ${BREWFILE}"
+    if [ "$DRY_RUN" -eq 0 ] && [ ! -f "${BREWFILE}" ]; then
+        echo "Error: Brewfile '${BREWFILE}' not found"
+        exit 1
+    fi
+    run_cmd brew bundle install --file="${BREWFILE}"
+else
+    OS_LOWER=$(uname -s | tr '[:upper:]' '[:lower:]')
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    for bf in "${SCRIPT_DIR}/Brewfile.common" "${SCRIPT_DIR}/Brewfile.${OS_LOWER}"; do
+        if [ -f "$bf" ]; then
+            echo "Using Brewfile: ${bf}"
+            run_cmd brew bundle install --file="${bf}"
+        else
+            echo "Warning: ${bf} not found, skipping"
+        fi
+    done
 fi
 
-run_cmd brew update
-run_cmd brew bundle install --file="${BREWFILE}"
 run_cmd brew cleanup
 
 # Initialize chezmoi with dotfiles repository
@@ -198,17 +210,14 @@ else
     echo "Warning: chezmoi not found in PATH, skipping initialization"
 fi
 
-# Install SDKMAN
-echo "Setting up SDKMAN..."
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-if [ -f "${SCRIPT_DIR}/sdkman-install.sh" ]; then
-    if [ "$DRY_RUN" -eq 1 ]; then
-        echo "[DRY RUN] Would execute: ${SCRIPT_DIR}/sdkman-install.sh"
-    else
-        "${SCRIPT_DIR}/sdkman-install.sh"
-    fi
+# Install mise-managed runtimes
+echo "Setting up mise runtimes..."
+if [ "$DRY_RUN" -eq 1 ]; then
+    echo "[DRY RUN] Would execute: mise install"
+elif command -v mise &>/dev/null; then
+    mise install
 else
-    echo "Warning: sdkman-install.sh not found, skipping SDKMAN setup"
+    echo "Warning: mise not found in PATH, skipping runtime setup"
 fi
 
 # Install TPM (Tmux Plugin Manager)
