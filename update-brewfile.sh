@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 
-# Reconcile installed packages against Brewfile.common + Brewfile.linux + Brewfile.darwin.
-# Uses the Homebrew JSON API to auto-categorize untracked brew formulae by OS requirement.
-# Run on each platform after installing new packages.
+# Reconcile installed packages against Brewfile.common + Brewfile.<os>.
+# Automatically adds new packages to the appropriate Brewfile and removes
+# uninstalled ones. The other OS's Brewfile is never touched.
+# Uses the Homebrew JSON API to categorize new brew formulae by OS requirement.
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 
 COMMON="$SCRIPT_DIR/Brewfile.common"
-LINUX_FILE="$SCRIPT_DIR/Brewfile.linux"
-DARWIN_FILE="$SCRIPT_DIR/Brewfile.darwin"
+OS_FILE="$SCRIPT_DIR/Brewfile.$OS"
 
 # Extract quoted name from Brewfile lines: brew "foo", ... -> foo
 names_from_file() {
@@ -21,10 +22,57 @@ names_from_file() {
         | sort -u
 }
 
-# Full Brewfile line for a given name from a dump file
-line_for_name() {
+# Extract the full entry for a name from a dump file (description comment + package line)
+full_entry_for_name() {
     local name="$1" file="$2"
-    grep -E "^(brew|tap|cargo|go) \"$name\"" "$file" || true
+    awk -v name="$name" '
+        /^(brew|tap|cargo|go) / && index($0, "\"" name "\"") {
+            if (pending ~ /^#/) print pending
+            print
+            pending = ""
+            next
+        }
+        /^#/ { pending = $0; next }
+        { pending = "" }
+    ' "$file"
+}
+
+# Remove a package entry (and its preceding description comment) from a Brewfile
+remove_from_file() {
+    local name="$1" file="$2"
+    [ -f "$file" ] || return 0
+    local tmpf
+    tmpf=$(mktemp)
+    awk -v name="$name" '
+        /^(brew|tap|cargo|go) / && index($0, "\"" name "\"") {
+            pending = ""
+            next
+        }
+        /^#/ {
+            if (pending != "") print pending
+            pending = $0
+            next
+        }
+        {
+            if (pending != "") print pending
+            pending = ""
+            print
+        }
+        END { if (pending != "") print pending }
+    ' "$file" > "$tmpf"
+    mv "$tmpf" "$file"
+}
+
+# Find which of the two active Brewfiles tracks a given package name
+find_tracking_file() {
+    local name="$1"
+    local f
+    for f in "$COMMON" "$OS_FILE"; do
+        if grep -qE "^(brew|tap|cargo|go) \"$name\"" "$f" 2>/dev/null; then
+            echo "$f"
+            return
+        fi
+    done
 }
 
 TMPFILE=$(mktemp)
@@ -33,27 +81,22 @@ trap 'rm -f "$TMPFILE"' EXIT
 echo "Dumping installed packages..."
 brew bundle dump --force --describe --no-vscode --file="$TMPFILE"
 
-# All tracked names across all three Brewfiles
+# Only compare against the two files relevant to the current OS
 tracked=$(sort -u \
     <(names_from_file "$COMMON") \
-    <(names_from_file "$LINUX_FILE") \
-    <(names_from_file "$DARWIN_FILE"))
+    <(names_from_file "$OS_FILE"))
 
 dumped=$(names_from_file "$TMPFILE")
 
-# Packages in dump but not in any Brewfile
 new=$(comm -23 <(echo "$dumped") <(echo "$tracked") 2>/dev/null || true)
-
-# Packages in Brewfiles but no longer in dump
 removed=$(comm -13 <(echo "$dumped") <(echo "$tracked") 2>/dev/null || true)
 
 if [ -z "$new" ] && [ -z "$removed" ]; then
-    echo "Everything in sync — no untracked or missing packages."
+    echo "Everything in sync — no changes needed."
     exit 0
 fi
 
 if [ -n "$new" ]; then
-    # Separate brew formulae from taps/cargo/go (latter are always common)
     new_brew=()
     new_other=()
     while IFS= read -r name; do
@@ -64,79 +107,70 @@ if [ -n "$new" ]; then
         fi
     done <<< "$new"
 
-    suggest_common=()
-    suggest_linux=()
-    suggest_darwin=()
-    suggest_unknown=()
+    add_to_common=()
+    add_to_os=()
+    add_to_unknown=()
 
     if [ "${#new_brew[@]}" -gt 0 ]; then
         echo "Querying Homebrew API for OS requirements..."
-        # Batch query all untracked brew formulae
         if info_json=$(brew info --json=v2 "${new_brew[@]}" 2>/dev/null); then
-            linux_names=$(echo "$info_json" \
-                | jq -r '.formulae[] | select(.requirements[] | .name == "linux") | .name' 2>/dev/null || true)
-            darwin_names=$(echo "$info_json" \
-                | jq -r '.formulae[] | select(.requirements[] | .name == "macos") | .name' 2>/dev/null || true)
-            common_names=$(echo "$info_json" \
-                | jq -r '.formulae[] | select(.requirements | length == 0) | .name' 2>/dev/null || true)
+            # Any OS requirement means it's platform-specific; no requirement means common
+            os_specific=$(echo "$info_json" \
+                | jq -r '.formulae[] | select(.requirements | length > 0) | .name' \
+                2>/dev/null || true)
+            cross_platform=$(echo "$info_json" \
+                | jq -r '.formulae[] | select(.requirements | length == 0) | .name' \
+                2>/dev/null || true)
 
             for name in "${new_brew[@]}"; do
-                if echo "$linux_names" | grep -qx "$name"; then
-                    suggest_linux+=("$name")
-                elif echo "$darwin_names" | grep -qx "$name"; then
-                    suggest_darwin+=("$name")
-                elif echo "$common_names" | grep -qx "$name"; then
-                    suggest_common+=("$name")
+                if echo "$os_specific" | grep -qx "$name"; then
+                    add_to_os+=("$name")
+                elif echo "$cross_platform" | grep -qx "$name"; then
+                    add_to_common+=("$name")
                 else
-                    suggest_unknown+=("$name")
+                    add_to_unknown+=("$name")
                 fi
             done
         else
-            # API call failed entirely — mark all as unknown
-            suggest_unknown=("${new_brew[@]}")
+            add_to_unknown=("${new_brew[@]}")
         fi
     fi
 
     # taps, cargo, go are always common
     for name in "${new_other[@]}"; do
-        suggest_common+=("$name")
+        add_to_common+=("$name")
     done
 
-    if [ "${#suggest_common[@]}" -gt 0 ]; then
-        echo ""
-        echo "==> Add to Brewfile.common (cross-platform):"
-        for name in "${suggest_common[@]}"; do
-            line_for_name "$name" "$TMPFILE" | sed 's/^/  /'
-        done
-    fi
+    for name in "${add_to_common[@]+"${add_to_common[@]}"}"; do
+        echo "  → Brewfile.common: $name"
+        full_entry_for_name "$name" "$TMPFILE" >> "$COMMON"
+    done
 
-    if [ "${#suggest_linux[@]}" -gt 0 ]; then
-        echo ""
-        echo "==> Add to Brewfile.linux (Linux-only):"
-        for name in "${suggest_linux[@]}"; do
-            line_for_name "$name" "$TMPFILE" | sed 's/^/  /'
-        done
-    fi
+    for name in "${add_to_os[@]+"${add_to_os[@]}"}"; do
+        echo "  → Brewfile.$OS: $name"
+        full_entry_for_name "$name" "$TMPFILE" >> "$OS_FILE"
+    done
 
-    if [ "${#suggest_darwin[@]}" -gt 0 ]; then
+    if [ "${#add_to_unknown[@]}" -gt 0 ]; then
         echo ""
-        echo "==> Add to Brewfile.darwin (macOS-only):"
-        for name in "${suggest_darwin[@]}"; do
-            line_for_name "$name" "$TMPFILE" | sed 's/^/  /'
-        done
-    fi
-
-    if [ "${#suggest_unknown[@]}" -gt 0 ]; then
-        echo ""
-        echo "==> Categorize manually (API lookup failed or ambiguous):"
-        for name in "${suggest_unknown[@]}"; do
-            line_for_name "$name" "$TMPFILE" | sed 's/^/  /'
+        echo "Could not categorize — add manually to the appropriate Brewfile:"
+        for name in "${add_to_unknown[@]}"; do
+            while IFS= read -r line; do echo "  $line"; done \
+                <<< "$(full_entry_for_name "$name" "$TMPFILE")"
         done
     fi
 fi
 
 if [ -n "$removed" ]; then
     echo ""
-    echo "==> No longer installed (consider removing from Brewfiles):"
-    while IFS= read -r line; do echo "  $line"; done <<< "$removed"
+    while IFS= read -r name; do
+        tracking_file=$(find_tracking_file "$name")
+        if [ -n "$tracking_file" ]; then
+            echo "  ✗ Removing from $(basename "$tracking_file"): $name"
+            remove_from_file "$name" "$tracking_file"
+        fi
+    done <<< "$removed"
 fi
+
+echo ""
+echo "Done."
